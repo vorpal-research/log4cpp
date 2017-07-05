@@ -56,7 +56,7 @@ namespace log4cpp {
 		 * the setConversionPattern call. By default, set
 		 * to "%%m%%n"
          **/
-        virtual std::string format(const LoggingEvent& event);
+        virtual StringBuffer format(LoggingEvent&& event);
 
         /**
          * Sets the format of log lines handled by this
@@ -82,7 +82,7 @@ namespace log4cpp {
          * @exception ConfigureFailure if the pattern is invalid
          **/
         virtual void setConversionPattern(const std::string& conversionPattern)
-            throw(ConfigureFailure);
+            /* throw(ConfigureFailure) */;
 
         virtual std::string getConversionPattern() const;
 
@@ -91,7 +91,7 @@ namespace log4cpp {
         class LOG4CPP_EXPORT PatternComponent {
             public:
             inline virtual ~PatternComponent() {};
-            virtual void append(std::ostringstream& out, const LoggingEvent& event) = 0;
+            virtual void append(StringBuffer& out, LoggingEvent& event) = 0;
         };
 
         private:

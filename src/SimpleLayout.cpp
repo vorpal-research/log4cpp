@@ -26,17 +26,18 @@ namespace log4cpp {
     SimpleLayout::~SimpleLayout() {
     }
 
-    std::string SimpleLayout::format(const LoggingEvent& event) {
+    StringBuffer SimpleLayout::format(LoggingEvent&& event) {
         std::ostringstream message;
 
         const std::string& priorityName = Priority::getPriorityName(event.priority);
 		message.width(Priority::MESSAGE_SIZE);message.setf(std::ios::left);
-		message << priorityName << ": " << event.message << std::endl;
-        return message.str();
+		message << priorityName << ": " << std::flush;
+
+        return StringBuffer().append(message.str()).append(std::move(event.message)).append("\n").move();
     }
 
-   std::auto_ptr<Layout> create_simple_layout(const FactoryParams& params)
+   std::unique_ptr<Layout> create_simple_layout(const FactoryParams& params)
    {
-      return std::auto_ptr<Layout>(new SimpleLayout);
+      return std::unique_ptr<Layout>(new SimpleLayout);
    }
 }

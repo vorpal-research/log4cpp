@@ -40,7 +40,7 @@ namespace log4cpp {
          * Log in Appender specific way. 
          * @param event  The LoggingEvent to log. 
          **/
-        virtual void doAppend(const LoggingEvent& event);
+        virtual void doAppend(LoggingEvent&& event) override;
 
         /**
          * Reopens the output destination of this Appender, e.g. the logfile 
@@ -99,7 +99,7 @@ namespace log4cpp {
          * implement this method to perform actual logging.
          * @param event  The LoggingEvent to log. 
          **/
-        virtual void _append(const LoggingEvent& event) = 0;
+        virtual void _append(LoggingEvent&& event) = 0;
 
         
         private:

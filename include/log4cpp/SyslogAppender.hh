@@ -66,7 +66,7 @@ namespace log4cpp {
          * Sends a LoggingEvent to syslog.
          * @param event the LoggingEvent to log.
          **/
-        virtual void _append(const LoggingEvent& event);
+        virtual void _append(LoggingEvent&& event);
 
         const std::string _syslogName;
         int _facility;

@@ -148,7 +148,7 @@ namespace log4cpp {
 #endif
 	}
 
-	void DailyRollingFileAppender::_append(const log4cpp::LoggingEvent &event)
+	void DailyRollingFileAppender::_append(log4cpp::LoggingEvent&& event)
 	{
 		struct tm now;
 		time_t t = time(NULL);
@@ -166,10 +166,10 @@ namespace log4cpp {
 				_logsTime = now;
 			}
 		}
-		log4cpp::FileAppender::_append(event);
+		log4cpp::FileAppender::_append(std::move(event));
 	}
 
-   std::auto_ptr<Appender> create_daily_roll_file_appender(const FactoryParams& params)
+   std::unique_ptr<Appender> create_daily_roll_file_appender(const FactoryParams& params)
    {
       std::string name, filename;
       bool append = true;
@@ -178,6 +178,6 @@ namespace log4cpp {
       params.get_for("daily roll file appender").required("name", name)("filename", filename)("max_days_keep", max_days_keep)
                                           .optional("append", append)("mode", mode);
 
-      return std::auto_ptr<Appender>(new DailyRollingFileAppender(name, filename, max_days_keep, append, mode));
+      return std::unique_ptr<Appender>(new DailyRollingFileAppender(name, filename, max_days_keep, append, mode));
    }
 }

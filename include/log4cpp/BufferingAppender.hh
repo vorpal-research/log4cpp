@@ -18,8 +18,8 @@ namespace log4cpp
    class LOG4CPP_EXPORT BufferingAppender : public LayoutAppender 
    {
       public:
-         BufferingAppender(const std::string name, unsigned long max_size, std::auto_ptr<Appender> sink,
-                           std::auto_ptr<TriggeringEventEvaluator> evaluator);
+         BufferingAppender(const std::string name, unsigned long max_size, std::unique_ptr<Appender>&& sink,
+                           std::unique_ptr<TriggeringEventEvaluator>&& evaluator);
       
          virtual void close() { sink_->close(); }
          
@@ -27,15 +27,15 @@ namespace log4cpp
          void setLossy(bool lossy) { lossy_ = lossy; }
 
       protected:
-         virtual void _append(const LoggingEvent& event);
+         virtual void _append(LoggingEvent&& event) override;
 
       private:
          typedef std::list<LoggingEvent> queue_t;
          
          queue_t queue_;
          unsigned long max_size_;
-         std::auto_ptr<Appender> sink_;
-         std::auto_ptr<TriggeringEventEvaluator> evaluator_;
+         std::unique_ptr<Appender> sink_;
+         std::unique_ptr<TriggeringEventEvaluator> evaluator_;
          bool lossy_;
 
          void dump();

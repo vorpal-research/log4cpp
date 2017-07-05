@@ -46,7 +46,7 @@ namespace log4cpp {
 		 * and calls the OutputDebugString API.
 		 * @param event Event for which we are logging.
 		 */
-        virtual void _append(const LoggingEvent& event);
+        virtual void _append(LoggingEvent&& event);
     };
 }
 

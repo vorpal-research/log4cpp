@@ -90,7 +90,7 @@ namespace log4cpp {
          * Sends a LoggingEvent to NT Event log.
          * @param event the LoggingEvent to log.
          **/
-        virtual void _append(const LoggingEvent& event);
+        virtual void _append(LoggingEvent&& event);
 
     	HANDLE _hEventSource;
         std::string _strSourceName;

@@ -24,8 +24,9 @@ namespace log4cpp {
         // empty
     }
 
-    void StringQueueAppender::_append(const LoggingEvent& event) {
-        _queue.push(_getLayout().format(event));
+    void StringQueueAppender::_append(LoggingEvent&& event) {
+        auto buf = _getLayout().format(std::move(event));
+        for(auto&& chunk : buf) _queue.push(std::move(chunk));
     }
 
     bool StringQueueAppender::reopen() {
@@ -48,10 +49,10 @@ namespace log4cpp {
         std::string message;
 
         if (!_queue.empty()) {
-            message = _queue.front();
+            message = std::move(_queue.front());
             _queue.pop();
         }
 
-        return message;
+        return std::move(message);
     }
 }

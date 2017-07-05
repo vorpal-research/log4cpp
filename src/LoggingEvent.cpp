@@ -23,4 +23,15 @@ namespace log4cpp {
         priority(priority),
         threadName(threading::getThreadId()) {
     }
+
+    LoggingEvent::LoggingEvent(const std::string& categoryName,
+                               std::string&& message,
+                               const std::string& ndc,
+                               Priority::Value priority) :
+        categoryName(categoryName),
+        message(std::move(message)),
+        ndc(ndc),
+        priority(priority),
+        threadName(threading::getThreadId()) {
+    }
 }

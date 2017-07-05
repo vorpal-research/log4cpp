@@ -45,6 +45,17 @@ namespace log4cpp {
         LoggingEvent(const std::string& category, const std::string& message, 
                      const std::string& ndc, Priority::Value priority);
 
+        LoggingEvent(const std::string& category, std::string&& message,
+                     const std::string& ndc, Priority::Value priority);
+
+        LoggingEvent(LoggingEvent&&) = default;
+    private:
+        LoggingEvent(const LoggingEvent&) = default;
+    public:
+        LoggingEvent clone() const {
+            LoggingEvent copy(*this);
+            return std::move(copy);
+        }
 
         /** The category name. */
         const std::string categoryName;

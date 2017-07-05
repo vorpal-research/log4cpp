@@ -34,7 +34,7 @@ namespace log4cpp {
 
         static unsigned int maxDaysToKeepDefault;
         protected:
-        virtual void _append(const LoggingEvent& event);
+        virtual void _append(LoggingEvent&& event) override;
 
         unsigned int _maxDaysToKeep;
         // last log's file creation time (or last modification if appender just created)

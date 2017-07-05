@@ -63,7 +63,7 @@ namespace log4cpp {
          * Appends the LoggingEvent to the queue.
          * @param event the LoggingEvent to layout and append to the queue.
          **/
-        virtual void _append(const LoggingEvent& event);
+        virtual void _append(LoggingEvent&& event);
 
         std::queue<std::string> _queue;
     };

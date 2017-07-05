@@ -80,7 +80,7 @@ namespace log4cpp {
         virtual mode_t getMode() const;
 
         protected:
-        virtual void _append(const LoggingEvent& event);
+        virtual void _append(LoggingEvent&& event) override;
 
         const std::string _fileName;
         int _fd;

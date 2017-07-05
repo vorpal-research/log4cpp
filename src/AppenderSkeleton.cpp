@@ -27,10 +27,10 @@ namespace log4cpp {
         return true;
     }
     
-    void AppenderSkeleton::doAppend(const LoggingEvent& event) {
+    void AppenderSkeleton::doAppend(LoggingEvent&& event) {
         if ((Priority::NOTSET == _threshold) || (event.priority <= _threshold)) {
             if (!_filter || (_filter->decide(event) != Filter::DENY)) {
-                _append(event);
+                _append(std::move(event));
             }
         }
     }

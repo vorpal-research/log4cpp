@@ -30,11 +30,11 @@ namespace log4cpp {
         return _context;
     }
 
-    Priority::Value FixedContextCategory::getPriority() const throw() {
+    Priority::Value FixedContextCategory::getPriority() const noexcept {
         return Category::getPriority();
     }
    
-    Priority::Value FixedContextCategory::getChainedPriority() const throw() {
+    Priority::Value FixedContextCategory::getChainedPriority() const noexcept {
         Priority::Value result = getPriority();
 
         if (result == Priority::NOTSET) {
@@ -44,7 +44,7 @@ namespace log4cpp {
         return result;
     }
     
-    void FixedContextCategory::addAppender(Appender* appender) throw() {
+    void FixedContextCategory::addAppender(Appender* appender) noexcept {
         // XXX do nothing for now
     }
     
@@ -69,31 +69,31 @@ namespace log4cpp {
         // XXX do nothing for now
     }
 
-    bool FixedContextCategory::ownsAppender() const throw() {
+    bool FixedContextCategory::ownsAppender() const noexcept {
         return false;
     }
     
-    bool FixedContextCategory::ownsAppender(Appender* appender) const throw() {
+    bool FixedContextCategory::ownsAppender(Appender* appender) const noexcept {
         return false;
     }
     
-    void FixedContextCategory::callAppenders(const LoggingEvent& event)
-            throw() {
-        _delegate.callAppenders(event);
+    void FixedContextCategory::callAppenders(LoggingEvent&& event)
+            noexcept {
+        _delegate.callAppenders(std::move(event));
     }
 
     void FixedContextCategory::setAdditivity(bool additivity) {
         // XXX do nothing for now
     }
 
-    bool FixedContextCategory::getAdditivity() const throw() {
+    bool FixedContextCategory::getAdditivity() const noexcept {
         return _delegate.getAdditivity();
     }
 
     void FixedContextCategory::_logUnconditionally2(Priority::Value priority,
-            const std::string& message) throw() {
-        LoggingEvent event(getName(), message, _context, priority);
-        callAppenders(event);
+            std::string&& message) noexcept {
+        LoggingEvent event(getName(), std::move(message), _context, priority);
+        callAppenders(std::move(event));
     }
     
 } 

@@ -36,7 +36,7 @@ namespace log4cpp {
         virtual void rollOver();
 
         protected:
-        virtual void _append(const LoggingEvent& event);
+        virtual void _append(LoggingEvent&& event) override;
 
         unsigned int _maxBackupIndex;
         unsigned short int _maxBackupIndexWidth;	// keep constant index width by zeroing leading positions

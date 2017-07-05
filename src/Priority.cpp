@@ -34,7 +34,7 @@ namespace log4cpp {
     const int log4cpp::Priority::MESSAGE_SIZE = 8;
     
 
-    const std::string& Priority::getPriorityName(int priority) throw() {
+    const std::string& Priority::getPriorityName(int priority) noexcept {
          
         priority++;
         priority /= 100;
@@ -42,7 +42,7 @@ namespace log4cpp {
     }
 
     Priority::Value Priority::getPriorityValue(const std::string& priorityName) 
-    throw(std::invalid_argument) {
+    /* throw(std::invalid_argument) */ {
 	Priority::Value value = -1;
 
 	for (unsigned int i = 0; i < 10; i++) {

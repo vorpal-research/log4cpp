@@ -28,7 +28,7 @@ namespace log4cpp
          virtual void close() { }
       
       protected:
-         virtual void _append(const LoggingEvent& event);
+         virtual void _append(LoggingEvent&& event);
 
       private:
          mail_params * mail_params_;

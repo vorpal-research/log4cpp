@@ -25,19 +25,18 @@ namespace log4cpp {
     BasicLayout::~BasicLayout() {
     }
 
-    std::string BasicLayout::format(const LoggingEvent& event) {
-        std::ostringstream message;
+    StringBuffer BasicLayout::format(LoggingEvent&& event) {
+        StringBuffer message;
 
         const std::string& priorityName = Priority::getPriorityName(event.priority);
         message << event.timeStamp.getSeconds() << " " << priorityName << " " 
-                << event.categoryName << " " << event.ndc << ": " 
-                << event.message << std::endl;
+                << event.categoryName << " " << event.ndc << ": " << event.message << "\n";
 
-        return message.str();
+        return message.move();
     }
 
-    std::auto_ptr<Layout> create_basic_layout(const FactoryParams& params)
+    std::unique_ptr<Layout> create_basic_layout(const FactoryParams& params)
     {
-       return std::auto_ptr<Layout>(new BasicLayout);
+       return std::unique_ptr<Layout>(new BasicLayout);
     }
 }

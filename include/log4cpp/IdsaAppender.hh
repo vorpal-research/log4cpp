@@ -63,7 +63,7 @@ namespace log4cpp {
          * Sends a LoggingEvent to idsa.
          * @param event the LoggingEvent to log.
          **/
-        virtual void _append(const LoggingEvent& event);
+        virtual void _append(LoggingEvent&& event) override;
 
         const std::string _idsaName;
 

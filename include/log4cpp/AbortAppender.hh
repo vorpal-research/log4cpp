@@ -39,7 +39,7 @@ namespace log4cpp {
         virtual void setLayout(Layout* layout);
 
         protected:        
-        virtual void _append(const LoggingEvent& event);
+        virtual void _append(LoggingEvent&& event) override;
     };
 }
 

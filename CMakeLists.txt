@@ -78,6 +78,7 @@ ADD_LIBRARY ( ${LOG4CPP_LIBRARY_NAME}
   src/PThreads.cpp
   src/PortabilityImpl.cpp
   src/AbortAppender.cpp
+  src/StringBuffer.cpp
 )
 
 IF (WIN32)

@@ -119,7 +119,7 @@ namespace log4cpp {
          * Sends a LoggingEvent to the remote syslog.
          * @param event the LoggingEvent to log.
          **/
-        virtual void _append(const LoggingEvent& event);
+        virtual void _append(LoggingEvent&& event) override;
 
         const std::string _syslogName;
         const std::string _relayer;

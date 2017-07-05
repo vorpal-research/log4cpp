@@ -29,7 +29,7 @@ namespace log4cpp {
         virtual void close();
 
         protected:
-        virtual void _append(const LoggingEvent& event);
+        virtual void _append(LoggingEvent&& event);
 
         std::ostream* _stream;
     };

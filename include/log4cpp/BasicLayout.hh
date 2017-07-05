@@ -27,7 +27,7 @@ namespace log4cpp {
          * Formats the LoggingEvent in BasicLayout style:<br>
          * "timeStamp priority category ndc: message"
          **/
-        virtual std::string format(const LoggingEvent& event);
+        virtual StringBuffer format(LoggingEvent&& event);
     };        
 }
 

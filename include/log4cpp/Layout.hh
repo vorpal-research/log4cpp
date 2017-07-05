@@ -12,6 +12,7 @@
 
 #include <log4cpp/Portability.hh>
 #include <log4cpp/LoggingEvent.hh>
+#include <log4cpp/StringBuffer.hh>
 #include <string>
 
 namespace log4cpp {
@@ -32,7 +33,7 @@ namespace log4cpp {
          * @param event The LoggingEvent.
          * @returns an appendable string.
          **/
-        virtual std::string format(const LoggingEvent& event) = 0;
+        virtual StringBuffer format(LoggingEvent&& event) = 0;
     };        
 }
 

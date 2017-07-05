@@ -63,8 +63,8 @@ namespace log4cpp {
         ::closelog();
     }
 
-    void SyslogAppender::_append(const LoggingEvent& event) {
-        std::string message(_getLayout().format(event));
+    void SyslogAppender::_append(LoggingEvent&& event) {
+        std::string message(_getLayout().format(std::move(event)).str());
         int priority = toSyslogPriority(event.priority);
         ::syslog(priority | _facility, "%s", message.c_str());
     }
@@ -75,13 +75,13 @@ namespace log4cpp {
         return true;
     }
     
-    std::auto_ptr<Appender> create_syslog_appender(const FactoryParams& params)
+    std::unique_ptr<Appender> create_syslog_appender(const FactoryParams& params)
     {
        std::string name, syslog_name;
        int facility = 0;
        params.get_for("syslog appender").required("name", name)("syslog_name", syslog_name)
                                         .optional("facility", facility);
-       return std::auto_ptr<Appender>(new SyslogAppender(name, syslog_name, facility));
+       return std::unique_ptr<Appender>(new SyslogAppender(name, syslog_name, facility));
     }
 }
 

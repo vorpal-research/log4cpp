@@ -81,8 +81,8 @@ namespace log4cpp {
         _fd = ::open(_fileName.c_str(), _flags, _mode);
     }
 
-    void RollingFileAppender::_append(const LoggingEvent& event) {
-        FileAppender::_append(event);
+    void RollingFileAppender::_append(LoggingEvent&& event) {
+        FileAppender::_append(std::move(event));
         off_t offset = ::lseek(_fd, 0, SEEK_END);
         if (offset < 0) {
             // XXX we got an error, ignore for now
@@ -93,7 +93,7 @@ namespace log4cpp {
         }
     }
     
-   std::auto_ptr<Appender> create_roll_file_appender(const FactoryParams& params)
+   std::unique_ptr<Appender> create_roll_file_appender(const FactoryParams& params)
    {
       std::string name, filename;
       bool append = true;
@@ -103,6 +103,6 @@ namespace log4cpp {
                                                      ("max_backup_index", max_backup_index)
                                           .optional("append", append)("mode", mode);
 
-      return std::auto_ptr<Appender>(new RollingFileAppender(name, filename, max_file_size, max_backup_index, append, mode));
+      return std::unique_ptr<Appender>(new RollingFileAppender(name, filename, max_file_size, max_backup_index, append, mode));
    }
 }

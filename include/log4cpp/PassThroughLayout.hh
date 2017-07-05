@@ -15,7 +15,7 @@ namespace log4cpp
    class PassThroughLayout : public Layout
    {
       public:
-         virtual std::string format(const LoggingEvent& event) { return event.message; }
+         virtual StringBuffer format(LoggingEvent&& event) { return StringBuffer().append(std::move(event.message)).move(); }
    };
 }
 
